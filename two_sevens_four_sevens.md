@@ -32,6 +32,6 @@ It turned out that when I got back, Aren was about to announce the details of th
 
 #### 2.
 
-{To avoid confusion, I will say that the viewpoint character of this section is not the same as that of the previous section. In fact, the viewpoint character of a section is never the same as that of the previous section.}
+{To avoid confusion, I will say that the viewpoint character of this chapter is not the same as that of the previous chapter. In fact, the viewpoint character of a chapter is never the same as that of the previous chapter.}
 
 I woke up from the knocking on my door. It was not the quiet knocking of someone who would like to get your attention but doesn't really care that much. It was the loud knocking of someone who needs to get in for some reason and is likely going to break down the door if nothing happens.
