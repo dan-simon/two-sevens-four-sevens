@@ -1,5 +1,7 @@
 A nautical greeting
 
+A sea eagle
+
 A walk in nature
 
 A type of fish closely related to cod
