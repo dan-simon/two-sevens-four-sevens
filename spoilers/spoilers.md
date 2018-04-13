@@ -4,8 +4,6 @@ A sea eagle
 
 A walk in nature
 
-A type of fish closely related to cod
-
 An instruction to do nothing
 
 A type of mallow with edible seed pods
