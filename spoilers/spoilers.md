@@ -1,12 +1,21 @@
 A nautical greeting
+
 A walk in nature
+
 A type of fish closely related to cod
+
 An instruction to do nothing
+
 A type of mallow with edible seed pods
+
 Urbi et ____
+
 That which hurts
+
 To desire
+
 Between a month and a decade
+
 
 ```
 a (- 6 (- 6 4))
