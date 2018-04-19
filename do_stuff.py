@@ -9,8 +9,9 @@ def main():
         all_text = f.read()
     with open('two_sevens_four_sevens_archive.md', 'w') as f:
         f.write(all_text)
-    assert '<END>' in all_text
-    important_text = all_text.split('<END>')[0].strip()
+    parts = all_text.split('<END>')
+    assert len(parts) == 2
+    important_text = parts[0].strip()
     assert all(i == '#' for i in important_text.split('\n')[0].split(' ')[0])
     title = important_text.split('\n')[0].replace('#', '').strip()
     print('Wordcount: ' + str(len(important_text.split())))
