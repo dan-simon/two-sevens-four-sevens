@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Numbers</title>
+  <script type="module" src="script.js"></script>
+  <link rel="stylesheet" type="text/css" href="main.css"></link>
+</head>
+<body>
+  <button class="tabbtn">Numbers</button>
+  <button class="tabbtn">Options</button>
+  <button class="tabbtn">Stats</button>
+  <button class="tabbtn">Achievements</button>
+  <button class="tabbtn">Credits</button>
+  </table>
+  <div id="numbers" class="tab" style="display: block;">
+    <div id="0"></div>
+    <button id="0btn" class="availablebtn">Make zeros</button>
+    <br/>
+    <button id="maxall" class="availablebtn">Buy max</button>
+    <table id="numtable"></table>
+    <button id="shift" class="unavailablebtn"></button>
+  </div>
+  <div id="options" class="tab" style="display: none;">
+    <button id="save" class="optionsbtn">Save game</button>
+    <button id="load" class="optionsbtn">Load game</button>
+    <button id="reset" class="optionsbtn">HARD RESET</button>
+    <br/>
+    <div id="above-saveplace" style="display: none;"></div>
+    <input id="saveplace" style="display: none;"></input>
+  </div>
+  <div id="stats" class="tab" style="display: none;">
+    <div id="totalZeros"></div>
+    <div id="playtime"></div>
+    <div id="clicks"></div>
+    <div id="percent"></div>
+  </div>
+  <div id="achievements" class="tab" style="display: none;">
+    <div id="achProdBoost"></div>
+    <table id="achTable">
+    </table>
+  </div>
+  <div id="credits" class="tab" style="display: none;">
+    Credit to Incremental (at eyewars.github.io/Incremental) for gameplay ideas
+    and styling and Antimatter Dimensions (at ivark.github.io) for gameplay ideas,
+    styling, and achievement ideas.
+  </div>
+  <div id="notify"></div>
+</body>
+</html>
