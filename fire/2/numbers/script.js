@@ -63,6 +63,7 @@ let initPlayer = function () {
     'boosts': {},
     'shifts': 0,
     'infinities': 0,
+    'infinityPoints': new Decimal(0),
     'achBoost': 1,
     'achievements': [],
     'playStart': Date.now(),
@@ -156,8 +157,19 @@ let updateStats = function () {
   document.getElementById('percent').innerHTML = 'You are ' +
   getPercentToInfinity() + '% of the way to infinity.'
   // boosts
-  // total shifts
+  document.getElementById('numBoosts').innerHTML = 'You have done ' +
+  processPhrase(totalBoosts(), 0, 'boost') + '.';
+  // shifts
+  document.getElementById('numShifts').innerHTML = 'You have done ' +
+  processPhrase(player.shifts, 0, 'shift') + '.';
   // infinities
+  if (player.infinities > 0) {
+    document.getElementById('statInfinitied').style.display = 'none';
+    document.getElementById('statInfinitied').innerHTML =
+    'You have gone infinite ' + processPhrase(player.infinities, 0, 'time') + '.';
+  } else {
+    document.getElementById('statInfinitied').style.display = '';
+  }
 }
 
 let updateAchPower = function () {
@@ -192,7 +204,8 @@ let getZeros = function () {
 }
 
 let doProduction = function (diff) {
-  for (let i = 0; i < 7; i++) {
+  addZeros(getProdPerSecondOf(0).times(diff / 1000))
+  for (let i = 1; i < 7; i++) {
     player.amounts[i] = getAmount(i).plus(getProdPerSecondOf(i).times(diff / 1000));
   }
 }
@@ -258,6 +271,7 @@ let updateAmountAch = function () {
   if (getZeros().gte(1e6)) {
     giveAchievement(player, 'A million is a lot');
   }
+  // imprecision
   if (getAmount(7).minus(77).abs().lt(.1)) {
     giveAchievement(player, 'Where\'s eight?');
   }
@@ -273,7 +287,8 @@ let updateAmountAch = function () {
   if (getProdPerSecondOf(0).gt(1e6) && canGiveNerf()) {
     giveAchievement(player, 'Some one needs to nerf that');
   }
-  if (getAmount(7).gte(274)) {
+  // imprecision
+  if (getAmount(7).gte(274 - .001)) {
     giveAchievement(player, '2747');
   }
 }
@@ -287,6 +302,46 @@ let tick = function () {
   updateStats();
   updateNumbersSection();
   doProduction(diff);
+  doInfinityStuff();
+}
+
+let getInfinityPoints = function () {
+  return new Decimal(1);
+}
+
+let doInfinityStuff = function () {
+  if (!player.break && overInfinity()) {
+    document.getElementById('main').style.display = 'none';
+    document.getElementById('empty').style.display = '';
+    document.getElementById('goinfinite').className = 'availablebtn';
+    document.getElementById('goinfinite').style.display = '';
+    document.getElementById('goinfinite').innerHTML = 'Go infinite (get ' +
+    getInfinityPoints().toStr(2) + ' infinity points)';
+  } else {
+    document.getElementById('main').style.display = '';
+    document.getElementById('empty').style.display = 'none';
+  }
+  if (player.infinities > 0) {
+    document.getElementById('inftabbtn').style.display = '';
+  } else {
+    document.getElementById('inftabbtn').style.display = 'none';
+  }
+  updateInfinityTab();
+}
+
+let updateInfinityTab = function () {
+  document.getElementById('numInfinitied').innerHTML =
+  'You have gone infinite ' + processPhrase(player.infinities, 0, 'time') + '.';
+  document.getElementById('numInfPoints').innerHTML =
+  'You have ' + processPhrase(player.infinityPoints, 2, 'infinity point') + '.';
+}
+
+let overInfinity = function () {
+  return getZeros().gte(Decimal.pow(2, 1024));
+}
+
+let cannotDoStuff = function () {
+  return !player.break && overInfinity();
 }
 
 let getClickPower = function () {
@@ -303,6 +358,9 @@ let addZeros = function (x) {
 }
 
 let click = function () {
+  if (cannotDoStuff()) {
+    return false;
+  }
   player.clicks++;
   addZeros(getClickPower());
   giveAchievement(player, 'You gotta start somewhere');
@@ -495,7 +553,16 @@ let maxall = function () {
   }
 }
 
+let buyMaxDoublingsAll = function () {
+  for (let i = 1; i <= 7; i++) {
+    buyMaxDoubling(i);
+  }
+}
+
 let baseBuyOne = function (i) {
+  if (cannotDoStuff()) {
+    return false;
+  }
   if (i > player.shifts + 1) {
     return false;
   }
@@ -510,6 +577,9 @@ let baseBuyOne = function (i) {
 }
 
 let baseBuyOneDoubling = function (i) {
+  if (cannotDoStuff()) {
+    return false;
+  }
   if (i > player.shifts + 1) {
     return false;
   }
@@ -578,6 +648,20 @@ let canShift = function (i) {
   getBought(player.shifts + 1);
 }
 
+let giveStartAchBonuses = function () {
+  if (hasAchievement(player, 'Not quite eight')) {
+    player.amounts[0] = getZeros().max(new Decimal(7));
+  }
+}
+
+let resetMinor = function (extra) {
+  let newPlayer = initPlayer();
+  for (let i of resetKeys.concat(extra)) {
+    player[i] = newPlayer[i];
+  }
+  giveStartAchBonuses();
+}
+
 let boost = function (i) {
   if (!canBoost(i)) {
     notify('Cannot boost!', 'red', 2);
@@ -585,10 +669,7 @@ let boost = function (i) {
   }
   giveAchievement(player, 'You need a boost');
   player.boosts[i] = get(player.boosts, i, 0) + 1;
-  let newPlayer = initPlayer();
-  for (let i of resetKeys) {
-    player[i] = newPlayer[i];
-  }
+  resetMinor([]);
   return true;
 }
 
@@ -599,17 +680,27 @@ let shift = function () {
   }
   giveAchievement(player, 'That sounds a bit shifty');
   player.shifts++;
-  let newPlayer = initPlayer();
-  for (let i of resetKeys) {
-    player[i] = newPlayer[i];
+  resetMinor(['boosts']);
+  return true;
+}
+
+let goInfinite = function () {
+  if (!overInfinity()) {
+    notify('Cannot go infinite!', 'red', 2);
+    return false;
   }
-  player.boosts = newPlayer.boosts;
+  giveAchievement(player, 'Not quite eight');
+  player.infinities++;
+  player.infinityPoints = get(player, 'infinityPoints', new Decimal(0)).plus(
+    getInfinityPoints());
+  resetMinor(['boosts', 'shifts']);
   return true;
 }
 
 let setNumberOnclick = function () {
   document.getElementById('0btn').onclick = click;
   document.getElementById('maxall').onclick = maxall;
+  document.getElementById('maxdoublingsall').onclick = buyMaxDoublingsAll;
   for (let i = 1; i <= 7; i++) {
     document.getElementById('buyOne' + i).onclick = function () {
       buyOne(i);
@@ -630,11 +721,15 @@ let setNumberOnclick = function () {
   document.getElementById('shift').onclick = shift;
 }
 
+let setOtherOnclick = function () {
+  document.getElementById('goinfinite').onclick = goInfinite;
+}
+
 let setup = function () {
   load(localStorage.getItem('save'), false);
   let tabbtns = document.getElementsByClassName('tabbtn');
   for (let i of tabbtns) {
-    let name = i.innerHTML.toLowerCase();
+    let name = i.innerHTML.toLowerCase().replace(/^\s+|\s+$/g, '');
     i.onclick = function () {
       showTab(name);
     }
@@ -643,12 +738,41 @@ let setup = function () {
   setupNumbersSection();
   updateNumbersSection();
   setNumberOnclick();
+  setOtherOnclick();
   setInterval(tick, 100);
   setInterval(save, 10000);
   populateAchievements(player);
 }
 
 let player = initPlayer();
+
+window.addEventListener('keydown', function(event) {
+  if (document.activeElement.type === "text") {
+    return false;
+  }
+  const tmp = event.keyCode;
+  if (tmp >= 49 && tmp <= 55) {
+      buyMax(tmp - 48);
+      return false;
+  }
+  switch (tmp) {
+    case 67: // C
+    click();
+    break;
+    case 68: // D
+    buyMaxDoublingsAll();
+    break;
+    case 73: // I
+    goInfinite();
+    break;
+    case 77: // M
+    maxall();
+    break;
+    case 83: // S
+    shift();
+    break;
+  }
+});
 
 window.onload = function () {
   setup();
