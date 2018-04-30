@@ -15,15 +15,15 @@ let achievements = [
     {'name': 'That sounds a bit shifty', 'desc': 'Shift.'},
     {'name': 'A million is a lot', 'desc': 'Get 1e6 zeros. Reward: Ones are 2x stronger.'},
     {'name': "Where's eight?", 'desc': 'Have exactly 77 sevens. Reward: Sevens are 7/6x stronger.'},
-    {'name': 'Sevens add and multiply', 'desc': 'Get sevens multiplier to at least 1000.\nReward: Sevens are again 7/6x stronger.'},
+    {'name': 'Sevens add and multiply', 'desc': 'Get sevens multiplier to at least 1000.Reward: Sevens are again 7/6x stronger.'},
     {'name': 'You need a boost', 'desc': 'Boost.'}
   ], [
     {'name': 'All at once', 'desc': 'Buy at least 343 ones at once.'},
     {'name': "That's a lot of boosts", 'desc': 'Boost 10 times.'},
-    {'name': "What's the point of doing that?", 'desc': "Buy a single one when you've bought\nat least 2401. Reward: each one bought gives a 2401/2400 boost to\none production."},
+    {'name': "What's the point of doing that?", 'desc': "Buy a single one when you've bought at least 2401. Reward: each one bought gives a 2401/2400 boost to one production."},
     {'name': 'Halfway there', 'desc': 'Get over 1.34e154 zeros. Reward: All production is doubled.'},
-    {'name': 'Some one needs to nerf that', 'desc': 'Produce 1e6 zeros per second with a single one\nand nothing else.'},
-    {'name': '2747', 'desc': 'Get 274 sevens. Reward: each seven bought gives a 343/342 boost\nto seven production.'},
+    {'name': 'Some one needs to nerf that', 'desc': 'Produce 1e6 zeros per second with a single one and nothing else.'},
+    {'name': '2747', 'desc': 'Get 274 sevens. Reward: each seven bought gives a 343/342 boost to seven production.'},
     {'name': 'Not quite eight', 'desc': 'Go infinite. Reward: Start with 7 zeros.'}
   ]
 ];
