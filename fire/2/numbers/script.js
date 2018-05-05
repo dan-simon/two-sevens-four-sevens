@@ -67,7 +67,8 @@ let initPlayer = function () {
     'achBoost': 1,
     'achievements': [],
     'playStart': Date.now(),
-    'lastTick': Date.now()
+    'lastTick': Date.now(),
+    'version': [1, 0, 0, 0]
   };
 }
 
@@ -129,9 +130,24 @@ let exportSave = function () {
   document.getElementById('saveplace').value = localStorage.getItem('save');
 }
 
+let updatePlayer = function () {
+  if (!('times' in player)) {
+    player.times = {};
+    player.times.playStart = player.playStart;
+    player.times.infStart = player.infStart || player.playStart;
+    player.times.resetStart = player.resetStart || player.playStart;
+  }
+  for (let i in player.times) {
+    if (i in player) {
+      delete player[i];
+    }
+  }
+}
+
 let load = function (x, playerCaused) {
   try {
     player = getLoad(JSON.parse(atob(x)));
+    updatePlayer();
   } catch (e) {
     if (playerCaused) {
       notify('Your save failed to load!', 'red', 5);
@@ -149,7 +165,13 @@ let updateStats = function () {
   player.totalZeros.toStr(2) + ' total zeros.';
   // playtime
   document.getElementById('playtime').innerHTML = 'You have played for ' +
-  formatTime(Date.now() - player.playStart) + '.';
+  formatTime(Date.now() - player.times.playStart) + '.';
+  // inftime
+  document.getElementById('inftime').innerHTML = 'You have been in this infinity for ' +
+  formatTime(Date.now() - player.times.infStart) + '.';
+  // resettime
+  document.getElementById('resettime').innerHTML = 'You have gone without resetting for ' +
+  formatTime(Date.now() - player.times.resetStart) + '.';
   // clicks
   document.getElementById('clicks').innerHTML = 'You have clicked ' +
   player.clicks + ' times.'
@@ -652,6 +674,12 @@ let giveStartAchBonuses = function () {
   if (hasAchievement(player, 'Not quite eight')) {
     player.amounts[0] = getZeros().max(new Decimal(7));
   }
+  if (hasAchievement(player, 'That\'s fast')) {
+    player.amounts[0] = getZeros().max(new Decimal(7).pow(3));
+  }
+  if (hasAchievement(player, 'That\'s faster')) {
+    player.amounts[0] = getZeros().max(new Decimal(7).pow(9));
+  }
 }
 
 let resetMinor = function (extra) {
@@ -660,6 +688,7 @@ let resetMinor = function (extra) {
     player[i] = newPlayer[i];
   }
   giveStartAchBonuses();
+  player.times.resetStart = Date.now();
 }
 
 let boost = function (i) {
@@ -690,6 +719,7 @@ let goInfinite = function () {
     return false;
   }
   giveAchievement(player, 'Not quite eight');
+  player.times.infStart = Date.now();
   player.infinities++;
   player.infinityPoints = get(player, 'infinityPoints', new Decimal(0)).plus(
     getInfinityPoints());

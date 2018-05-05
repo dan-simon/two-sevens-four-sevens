@@ -103,12 +103,30 @@ the top 3 rows of infinity upgrades, and not the bottom 2, apply in challenges
 
 break infinity upgrades:
 
-fewer sevens needed for stars
-needed: 343 -> 294 -> 245 -> 196 -> 147 -> 98 -> 49
-costs: 7^8, ..., 7^13
+multiplier to ip based on ip:
+na -> max(1, log 343 ip) -> max(1, log 49 ip) -> max(1, log 7 ip)
+costs: 10^4, 10^5, 10^6
+multiplier to ip based on infinities:
+na -> max(1, log 343 infinities) -> max(1, log 49 infinities) -> max(1, log 7 infinities)
+costs: 10^4, 10^5, 10^6
+multiplier to ip based on total numbers bought:
+na -> max(1, log 343 bought) -> max(1, log 49 bought) -> max(1, log 7 bought)
+costs: 10^4, 10^5, 10^6
+multiplier to star production based on ip:
+na -> max(1, log 343 ip) -> max(1, log 49 ip) -> max(1, log 7 ip)
+costs: 10^8, 10^9, 10^10
+multiplier to star production based on infinities:
+na -> max(1, log 343 infinities) -> max(1, log 49 infinities) -> max(1, log 7 infinities)
+costs: 10^8, 10^9, 10^10
+multiplier to star production based on total numbers bought:
+na -> max(1, log 343 bought) -> max(1, log 49 bought) -> max(1, log 7 bought)
+costs: 10^8, 10^9, 10^10
 decrease doubling cost multiplier increase
 increase: 2 -> 13/7 -> 12/7 -> 11/7 -> 10/7 -> 9/7 -> 8/7
 costs: 7^8, ..., 7^13
+decrease number cost multiplier
+multiplier: 7/6 -> 8/7 -> ... -> 14/13
+costs: 7^8, ..., 7^14
 improve infinity point formula
 formula: 2x per infinity -> 3x per infinity -> ... -> 7x per infinity
 costs: 7^8, ..., 7^13
@@ -128,6 +146,11 @@ once you get a star, you unlock a stars tab.
 Each star produces 1 star power per second. Star power produces a
 max(1, (star power)) ** stars boost to all production.
 Star power resets on infinity.
+
+Extragalactic: When star power reaches 2^128,
+"The galaxy is too full of stars and collapses into a black hole"
+and you have to "Go to a new galaxy"
+This gives you +1 to black holes and +1 galaxy points.
 
 Cost increases: Once doubling costs go over infinity,
 for each doubling gotten the cost multiplier increases by a factor of x = 2.
@@ -160,8 +183,20 @@ Reward: Infinity points from going infinity are raised to the 7/6 power.
 [Note: That is, if you would have gotten 64, you get 128 instead.]
 
 Seventh row:
-[some other stuff]
+
+It's night now: Get 3 stars. Reward: Star power generation tripled.
+
+Maximum speed: Max all the autobuyers.
+
+Moar anafabula: Get the multiplier from achievement 2747 to be at least 2747. Reward: The multiplier from achievement 2747 is squared.
+
+My eyes hurt: Get 1e6 star power.
+
+2 million infinities? Nah, that's too hard.: Get 2 million infinity points. Reward: Infinities at least 5 seconds give double the infinity points.
+
 You broke the upgrades: Max all the break infinity upgrades.
+
+But I didn't want another prestige layer: Go extragalactic.
 
 Fourth row:
 
@@ -188,9 +223,9 @@ Fifth row:
 
 Anti-challenged: Complete all the challenges.
 
-That's faster: Go infinite in 1 minute. Reward: Start with 7^7 zeros.
+That's faster: Go infinite in 1 minute. Reward: Start with 7^9 zeros.
 
-How did you do that?: Shift no more than 5 times and don't boost.
+How did you do that?: Go infinite having shifted no more than 5 times and not boosted at all.
 
 We ain't ever getting over: Infinity without your zeros ever getting over
 your zeros per second. Reward: Ones get 2x multiplier.
