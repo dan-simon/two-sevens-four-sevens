@@ -1,0 +1,243 @@
+click: clicking to get zeros does maxall,
+every other way to buy doublings or numbers is disabled (but not shifts or boosts),
+you can click at most 1024 times (after that clicking displays a message saying
+"You've used all your clicks! Either wait or exit the challenge.")
+autobuyer: clicks every 1s
+1: every second, if you have more than zero bought ones, you lose one
+(you don't lose any amount ones). If you have zero bought ones, you reset
+(like a boost without the bonus, keeping prior boosts and shifts)
+autobuyer: buys ones every 2s
+2: whenever you buy anything or reset, production drops to 0%
+(multiplier on all production) and goes linearly to 100% over two minutes.
+autobuyer: buys twos every 4s
+3: whenever you reset, all production gains a 1/343 multiplier
+which grows exponentially, multiplies by 7 every 7 minutes (so after 21 minutes
+production is normal and after that it just gets better)
+autobuyer: buys threes every 8s
+4: every 4 seconds you lose all numbers (including zero if you have anything higher)
+but the highest number you have any of (you don't lose bought)
+autobuyer: buys fours every 16s
+5: every 5 seconds you buy max, and production is divided by total numbers bought
+in current reset
+autobuyer: buys fives every 32s
+6: doubling costs are in previous number (like number costs are),
+but start at 6 and multiply by 6 every purchase
+autobuyer: buys sixes every 64s
+7: each doubling multiplies by a logarithmically random number from 1/2 to 7
+(multiplies with IP purchases).
+autobuyer: buys sevens every 128s
+doublings: each doubling only multiplies by 1.9 (multiplies with IP purchases).
+autobuyer: buys doublings every 256s
+shifts: you can only shift 5 times (not 6)
+autobuyer: shifts every 512s
+boosts: you can't boost
+autobuyer: boosts every 1024s
+infinity: your production is multiplied by 1 - (fraction to infinity)
+so at 2^1023 it's multiplied by 1/1024
+autobuyer: infinities every 2048s
+
+Note: the term "production" does not include clicks.
+Note: Autobuyers 1-7 have a single/max choice.
+Note: You can make an autobuyer's actual interval be longer than or equal to
+its allowed interval.
+Note: There is one doubling and one boost autobuyer.
+They both have individual sub-priority arrays, and the
+doubling autobuyer has seven single/max choices.
+Note: Halving the interval of an autobuyer starts out costing 1 IP and
+doubles for each purchase. There is no bulk.
+Note: The minimum autobuyer interval is one-eighth of a second.
+
+infinity purchases:
+time-based multipliers to production:
+total playtime, time in infinity, time in reset
+total playtime: max(time in 30m, 1) ** x
+x: 0 -> 1/8 -> 1/4
+costs: 1, 10
+time in infinity: max(time in 5m, 1) ** x
+x: 0 -> 1/8 -> 1/4
+costs: 1, 10
+time in reset: max(time in 1m, 1) ** x
+x: 0 -> 1/8 -> 1/4
+costs: 1, 10
+infinity-based multipliers to production:
+infinities, infinity points, number of that type of number bought
+infinities: infinities ** x
+x: 0 -> 1/4 -> 1/2 -> 3/4 -> 1
+costs: 5, 25, 125, 625
+infinity points: infinity points ** x
+x: 0 -> 1/4 -> 1/2 -> 3/4 -> 1
+costs: 5, 25, 125, 625
+number of that type of number bought: number of that type of number bought ** x
+x: 0 -> 1/4 -> 1/2 -> 3/4 -> 1
+costs: 5, 25, 125, 625
+stronger things:
+shifts, boosts, doublings
+shifts: shift power is x
+x: 2 -> 9 / 4 -> 5 / 2 -> 11 / 4 -> 3
+costs: 10, 100, 1000, 10000
+boosts: boost power is x
+x: 2 -> 9 / 4 -> 5 / 2 -> 11 / 4 -> 3
+costs: 10, 100, 1000, 10000
+doublings: doubling power is x
+x: 2 -> 2.025 -> 2.05 -> 2.075 -> 2.1
+costs: 10, 100, 1000, 10000
+easier things:
+shifts, boosts, passive ip production
+shifts: you start with x shifts
+x: 0 -> 1 -> 2 -> 3 -> 4 -> 5 -> 6
+costs: 20, 40, 80, 160, 320, 640
+boosts: boosts cost x
+x: 343 -> 294 -> 245 -> 196 -> 147 -> 98 -> 49
+costs: 50, 250, 1250, 6250, 31250, 156250
+passive ip production: every minute you get x% of the best of your last 10 ip per min
+x: 0 -> 10 -> 20 -> 30 -> 40 -> 50
+costs: 100, 1000, 10000, 100000, 1000000
+x2 mults:
+x2 mult on ip, x2 mult on clicks, x2 mult on all production
+x2 mult on ip: costs are powers of 10 starting at 1000
+x2 mult on clicks: costs are powers of 10 starting at 1000
+x2 mult on all production: costs are powers of 10 starting at 1000
+[note: maybe starting at 10?]
+
+the top 3 rows of infinity upgrades, and not the bottom 2, apply in challenges
+
+break infinity upgrades:
+
+multiplier to ip based on ip:
+na -> max(1, log 343 ip) -> max(1, log 49 ip) -> max(1, log 7 ip)
+costs: 10^4, 10^5, 10^6
+multiplier to ip based on infinities:
+na -> max(1, log 343 infinities) -> max(1, log 49 infinities) -> max(1, log 7 infinities)
+costs: 10^4, 10^5, 10^6
+multiplier to ip based on total numbers bought:
+na -> max(1, log 343 bought) -> max(1, log 49 bought) -> max(1, log 7 bought)
+costs: 10^4, 10^5, 10^6
+multiplier to star production based on ip:
+na -> max(1, log 343 ip) -> max(1, log 49 ip) -> max(1, log 7 ip)
+costs: 10^8, 10^9, 10^10
+multiplier to star production based on infinities:
+na -> max(1, log 343 infinities) -> max(1, log 49 infinities) -> max(1, log 7 infinities)
+costs: 10^8, 10^9, 10^10
+multiplier to star production based on total numbers bought:
+na -> max(1, log 343 bought) -> max(1, log 49 bought) -> max(1, log 7 bought)
+costs: 10^8, 10^9, 10^10
+decrease doubling cost multiplier increase
+increase: 2 -> 13/7 -> 12/7 -> 11/7 -> 10/7 -> 9/7 -> 8/7
+costs: 7^8, ..., 7^13
+decrease number cost multiplier
+multiplier: 7/6 -> 8/7 -> ... -> 14/13
+costs: 7^8, ..., 7^14
+improve infinity point formula
+formula: 2x per infinity -> 3x per infinity -> ... -> 7x per infinity
+costs: 7^8, ..., 7^13
+
+[Note: if nx per infinity, then going infinite with x zeros gives
+n^(log(x)/log(infinity) - 1) infinity points]
+
+[Note: Last transitions of fewer sevens for stars and
+decrease doubling cost multiplier increase
+might be too powerful, test carefully]
+
+finish the top 5 rows of achievements to break infinity
+
+stars are a new prestige layer (between shifts and infinity)
+stars initially cost 343 sevens each, but this can be decreased
+once you get a star, you unlock a stars tab.
+Each star produces 1 star power per second. Star power produces a
+max(1, (star power)) ** stars boost to all production.
+Star power resets on infinity.
+
+Extragalactic: When star power reaches 2^128,
+"The galaxy is too full of stars and collapses into a black hole"
+and you have to "Go to a new galaxy"
+This gives you +1 to black holes and +1 galaxy points.
+
+Cost increases: Once doubling costs go over infinity,
+for each doubling gotten the cost multiplier increases by a factor of x = 2.
+In other words, the order is:
+Get production doubling for current cost.
+Multiply cost.
+If cost > Infinity, multiply cost multiplier.
+There is no such effect for numbers themselves.
+
+Sixth row:
+
+Limit break: Break infinity.
+
+Much upgrade. Such power. So wow.: Max all the top 4 rows of infinity upgrades.
+
+No one needs that many boosts: Get 100 total boosts.
+Reward: Boost power is boost power^(7/6).
+
+This is hell: Get sum of challenge times under 6.66 minutes.
+[Note: actually 6 and two thirds.]
+Reward: Boost to production based of sum of challenge times.
+[Note: This boost is max(10m / sum, 1)x]
+
+You're a star: Get a star.
+
+Luminosity: Get 1000 star power. Reward: Star power generation doubled.
+
+That many at once?: Get over 1000 infinity points by going infinite once.
+Reward: Infinity points from going infinity are raised to the 7/6 power.
+[Note: That is, if you would have gotten 64, you get 128 instead.]
+
+Seventh row:
+
+It's night now: Get 3 stars. Reward: Star power generation tripled.
+
+Maximum speed: Max all the autobuyers.
+
+Moar anafabula: Get the multiplier from achievement 2747 to be at least 2747. Reward: The multiplier from achievement 2747 is squared.
+
+My eyes hurt: Get 1e6 star power.
+
+2 million infinities? Nah, that's too hard.: Get 2 million infinity points. Reward: Infinities at least 5 seconds give double the infinity points.
+
+You broke the upgrades: Max all the break infinity upgrades.
+
+But I didn't want another prestige layer: Go extragalactic.
+
+Fourth row:
+
+Daredevil: Complete a challenge.
+
+That's fast: Go infinite in 1 hour. Reward: Start with 7^3 zeros.
+
+One's even enough: Go infinite with only one seven.
+[Note: this only considers what you have when you reach infinity.]
+Reward: All numbers but sevens are 7/6x stronger.
+
+Why were boosts afraid of seven?: Boost sevens.
+
+Some one needs to nerf that II: Produce 1e6 zeros per second with a single one
+and nothing else without any shifts or boosts.
+
+Anti-invasion from the eighth dimension!: Get the production multipliers in
+reversed order. [So one production multiplier < two production multiplier ...
+< seven production multiplier.] Reward: number n gets nx production multiplier.
+
+That's a lot of infinities: Go infinite 10 times.
+
+Fifth row:
+
+Anti-challenged: Complete all the challenges.
+
+That's faster: Go infinite in 1 minute. Reward: Start with 7^9 zeros.
+
+How did you do that?: Go infinite having shifted no more than 5 times and not boosted at all.
+
+We ain't ever getting over: Infinity without your zeros ever getting over
+your zeros per second. Reward: Ones get 2x multiplier.
+
+Many stoppages: Complete Challenge 2 in 2 minutes. Reward: Boost to
+production over first two minutes of infinity.
+[Note: Boost is max(2 / (minutes + 2 ** -16), 1)x]
+
+Exponential doesn't mean fast: Complete Challenge 3 in 3 minutes.
+Reward: exponential boost to all production over first 21 minutes,
+vanishing over next 21.
+[Note: Boost is max(1, 7 ** (3 - abs(minutes / 7 - 3)))x]
+
+Everything is done for you: Go infinite without at all manually clicking,
+buying, or resetting. [Note: This includes going infinite itself.]

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Numbers</title>
+  <script type="module" src="script.js"></script>
+  <link rel="stylesheet" type="text/css" href="main.css"></link>
+</head>
+<body>
+  <div id="main">
+    <button class="tabbtn">Numbers</button>
+    <button class="tabbtn">Options</button>
+    <button class="tabbtn">Stats</button>
+    <button class="tabbtn">Achievements</button>
+    <button class="tabbtn">Credits</button>
+    <button class="tabbtn">How to Play</button>
+    <button id="inftabbtn" class="tabbtn" style="display: none;">
+      Infinity
+    </button>
+    </table>
+    <div id="numbers" class="tab" style="display: block;">
+      <div id="0"></div>
+      <button id="0btn" class="availablebtn">Make zeros</button>
+      <br/>
+      <button id="maxall" class="availablebtn">Buy max</button>
+      <button id="maxdoublingsall" class="availablebtn">Buy max doublings</button>
+      <table id="numtable"></table>
+      <button id="shift" class="unavailablebtn"></button>
+    </div>
+    <div id="options" class="tab" style="display: none;">
+      <button id="save" class="optionsbtn">Save game</button>
+      <button id="load" class="optionsbtn">Load game</button>
+      <button id="reset" class="optionsbtn">HARD RESET</button>
+      <br/>
+      <div id="above-saveplace" style="display: none;"></div>
+      <input id="saveplace" style="display: none;"></input>
+    </div>
+    <div id="stats" class="tab" style="display: none;">
+      <div id="totalZeros"></div>
+      <div id="playtime"></div>
+      <div id="inftime"></div>
+      <div id="resettime"></div>
+      <div id="clicks"></div>
+      <div id="percent"></div>
+      <div id="numBoosts"></div>
+      <div id="numShifts"></div>
+      <div id="statInfinitied"></div>
+    </div>
+    <div id="achievements" class="tab" style="display: none;">
+      <div id="achProdBoost" style="text-align:center;"></div>
+      <table id="achTable" align="center">
+      </table>
+    </div>
+    <div id="credits" class="tab" style="display: none;">
+      Credit to Incremental (at eyewars.github.io/Incremental) for gameplay ideas
+      and styling and Antimatter Dimensions (at ivark.github.io) for gameplay ideas,
+      styling, and achievement ideas.
+    </div>
+    <div id="how to play" class="tab" style="display: none;">
+      <h2>General Information</h2>
+      Numbers is an idle incremental game.
+      <h2>Keyboard shortcuts</h2>
+      Press 1-7 to buy max of a number, m to max all, c to click, i to infinity, s to shift.
+    </div>
+    <div id="infinity" class="tab" style="display: none;">
+      <div id="numInfinitied"></div>
+      <div id="numInfPoints"></div>
+    </div>
+  </div>
+  <div id="empty">
+    <div>The numbers you formed have become mingled with each other and formed something greater...</div>
+    <button id="goinfinite" class="unavailablebtn"></button>
+  </div>
+  <div id="notify"></div>
+</body>
+</html>
