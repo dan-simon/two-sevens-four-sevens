@@ -1,1 +1,1 @@
-A story I wrote because someone wanted me to write one.
+A story I wrote because someone wanted me to write one. Not going to be finished due to being too weird and meta, though I'll probably write some more sensible and easier-to-write version of it, or at the very least something in the same universe. Also, you get a commit with an empty .gitignore.
